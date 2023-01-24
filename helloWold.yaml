@@ -1,0 +1,25 @@
+apiVersion: v1
+kind: Pipeline
+metadata:
+  name: helloworld-pipeline
+spec:
+  resources:
+  - name: source-code
+    type: git
+    source:
+      uri: https://github.com/mandla/old-mutual-task.git
+  tasks:
+  - name: build
+    taskRef:
+      name: jib-maven-build
+    resources:
+    - name: source-code
+      resource: source-code
+      path: ""
+  - name: deploy
+    taskRef:
+      name: deploy-to-cluster
+    resources:
+    - name: source-code
+      resource: source-code
+      path: ""
